@@ -55,7 +55,7 @@ def get_data():
             pg_conn.commit()
 
         # 3. SQS
-        msg = {"source": "service-b", "hits": hits}
+        msg = {"source": "inventory-service", "hits": hits}
         sqs.send_message(QueueUrl=QUEUE_URL, MessageBody=json.dumps(msg))
         
         # Log structured JSON

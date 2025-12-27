@@ -12,6 +12,7 @@ spec:
     helm:
       values: |
         prometheus:
+          enabled: true
           prometheusSpec:
             # IMPORTANT: Allows scraping ServiceMonitors in the 'demo' namespace
             serviceMonitorSelectorNilUsesHelmValues: false
@@ -36,4 +37,5 @@ spec:
   syncPolicy:
     automated:
       prune: true
-      selfHeal: true
+    syncOptions:
+      - ServerSideApply=true

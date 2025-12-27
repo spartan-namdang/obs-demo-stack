@@ -58,7 +58,7 @@ spec:
     spec:
       containers:
       - name: sqs-exporter
-        image: uzesis/sqs-exporter:latest # Lightweight SQS exporter
+        image: jmal98/sqs-exporter:latest # Lightweight SQS exporter
         ports:
         - containerPort: 9384
         env:

@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://charts.bitnami.com/bitnami
     chart: redis
-    targetRevision: 18.0.0
+    targetRevision: 23.0.5
     helm:
       values: |
         architecture: standalone
@@ -20,9 +20,9 @@ spec:
             enabled: true
             namespace: demo
             # Matches the prometheus-operator selector
-            # (ensure your Prometheus install watches this label)
-            labels: 
-              release: prometheus 
+            # (ensure the Prometheus install watches this label)
+            additionalLabels:
+              release: prometheus
   destination:
     server: https://kubernetes.default.svc
     namespace: demo

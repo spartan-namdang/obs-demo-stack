@@ -20,7 +20,7 @@ import (
 	semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
 )
 
-var serviceBURL = os.Getenv("SERVICE_B_URL")
+var inventoryServiceURL = os.Getenv("INVENTORY_SERVICE_URL")
 
 func initTracer() func(context.Context) error {
     // Sends traces to Tempo (via OTel Collector or direct)
@@ -60,16 +60,16 @@ func main() {
 		span := trace.SpanFromContext(c.Request.Context())
 		fmt.Printf("{\"level\":\"info\",\"msg\":\"Received ping request\",\"trace_id\":\"%s\"}\n", span.SpanContext().TraceID().String())
 
-		// Call Service B
+		// Call Inventory Service
 		client := http.Client{Transport: otelhttp.NewTransport(http.DefaultTransport)}
-		resp, err := client.Get(serviceBURL + "/data")
+		resp, err := client.Get(inventoryServiceURL + "/data")
 		if err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
 		}
 		defer resp.Body.Close()
 
-		c.JSON(200, gin.H{"message": "Pong from A", "service_b_status": resp.Status})
+		c.JSON(200, gin.H{"message": "Pong from checkout-api", "inventory_service_status": resp.Status})
 	})
 
 	r.Run(":8080")

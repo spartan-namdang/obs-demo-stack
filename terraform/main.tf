@@ -13,7 +13,7 @@ resource "helm_release" "argocd" {
 
   # Enable insecure mode for the UI (simplifies local demo access)
   set {
-    name  = "server.insecure"
+    name  = "configs.params.server\\.insecure"
     value = "true"
   }
 }

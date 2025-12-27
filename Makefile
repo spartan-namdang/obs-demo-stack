@@ -2,7 +2,9 @@
 
 # Default target
 all: prereqs cluster build infra deploy dashboards
-	@echo "✅ Setup Complete! Run 'make forward' to access Grafana."
+	@echo "✅ Setup Complete!"
+	@echo "Wait for all monitoring pods to be Running with 'kubectl get pods -n monitoring'"
+	@echo "Then, run 'make forward' to access Grafana."
 
 help:
 	@echo "Available commands:"
