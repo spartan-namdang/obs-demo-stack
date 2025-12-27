@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/phuongnam195/obs-demo-stack'
+    repoURL: 'https://github.com/spartan-namdang/obs-demo-stack'
     targetRevision: HEAD
     path: k8s/observability/components
   destination:
