@@ -94,6 +94,21 @@ app.get("/metrics", async (req, res) => {
   res.end(await client.register.metrics());
 });
 
+// Health check
+app.get("/healthz", async (req, res) => {
+  try {
+    await redis.ping();
+    await pgPool.query("SELECT 1");
+    await sqs.send(new GetQueueAttributesCommand({
+      QueueUrl: QUEUE_URL,
+      AttributeNames: ["QueueArn"],
+    }));
+    res.send("ok");
+  } catch (e) {
+    res.status(503).send("not ready");
+  }
+});
+
 // Start server
 app.listen(8000, () => {
   console.log("inventory-service listening on port 8000");
