@@ -105,7 +105,7 @@ app.get("/healthz", async (req, res) => {
     }));
     res.send("ok");
   } catch (e) {
-    res.status(503).send("not ready");
+    res.status(503).send(`not ready ${e}`);
   }
 });
 
