@@ -15,7 +15,7 @@ spec:
         auth:
           enabled: false
         metrics:
-          enabled: true  # <--- Crucial: Starts the sidecar exporter
+          enabled: true
           serviceMonitor:
             enabled: true
             namespace: demo

@@ -67,7 +67,12 @@ spec:
         imagePullPolicy: Never
         env:
         - name: REDIS_HOST
-          value: "redis-master"
+          value: "redis-headless"
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis
+              key: redis-password
         - name: POSTGRES_DSN
           value: "dbname=postgres user=postgres password=postgres host=postgres-postgresql"
         - name: SQS_ENDPOINT
