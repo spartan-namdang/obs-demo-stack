@@ -12,9 +12,9 @@ spec:
     helm:
       values: |
         auth:
-          username: postgres
-          password: postgres
-          database: postgres
+          username: demo_user
+          password: demo_pass
+          database: demo_db
         metrics:
           enabled: true
           serviceMonitor:

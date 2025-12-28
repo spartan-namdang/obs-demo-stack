@@ -69,7 +69,7 @@ spec:
         - name: REDIS_HOST
           value: "redis-master"
         - name: POSTGRES_DSN
-          value: "dbname=postgres user=postgres password=postgres host=postgres-postgresql"
+          value: "postgresql://demo_user:demo_pass@postgres-postgresql:5432/demo_db"
         - name: SQS_ENDPOINT
           value: "http://localstack.default.svc.cluster.local:4566"
         - name: SQS_QUEUE_URL
