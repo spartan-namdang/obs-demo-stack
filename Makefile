@@ -3,8 +3,11 @@
 # Default target
 all: prereqs cluster build infra deploy dashboards
 	@echo "✅ Setup Complete!"
-	@echo "Wait for all monitoring pods to be Running with 'kubectl get pods -n monitoring'"
-	@echo "Then, run 'make forward' to access Grafana and ArgoCD."
+	@echo "Access ArgoCD dashboard"
+	@echo "   👉 Open http://localhost:8080 (User: admin)"
+	@echo "   Get password: kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d"
+	@kubectl port-forward svc/argocd-server -n argocd 8080:443
+	@echo "Wait for all ArgoCD apps to sync, then run 'make forward' to access Grafana."
 
 help:
 	@echo "Available commands:"
@@ -59,10 +62,6 @@ forward:
 	@echo "🔌 Port Forwarding Grafana..."
 	@echo "   👉 Open http://localhost:3000 (User: admin / Pass: admin)"
 	@kubectl port-forward svc/grafana -n monitoring 3000:80
-	@echo "🔌 Port Forwarding ArgoCD..."
-	@echo "   👉 Open http://localhost:8080 (User: admin)"
-	@echo "   Get password: kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d"
-	@kubectl port-forward svc/argocd-server -n argocd 8080:443
 
 clean:
 	@echo "💥 Destroying Environment..."
