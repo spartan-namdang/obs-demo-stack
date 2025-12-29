@@ -95,9 +95,7 @@ kind: Service
 metadata:
   name: sqs-exporter
   labels:
-    # This label ensures Prometheus Operator picks it up automatically 
-    # if you have a generic ServiceMonitor or add one later.
-    app: sqs-exporter 
+    app: sqs-exporter
 spec:
   selector:
     app: sqs-exporter

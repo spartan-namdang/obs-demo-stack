@@ -3,8 +3,8 @@
 # Default target
 all: prereqs cluster build infra deploy dashboards
 	@echo "✅ Setup Complete!"
-	@echo "👉 Run 'make forward argocd' to access ArgoCD."
-	@echo "📊 Wait for all ArgoCD apps to sync, then run 'make forward grafana' to access Grafana."
+	@echo "👉 Run 'make forward-argocd' to access ArgoCD."
+	@echo "📊 Wait for all ArgoCD apps to sync, then run 'make forward-grafana' to access Grafana."
 
 help:
 	@echo "Available commands:"
@@ -55,13 +55,17 @@ dashboards:
 	@kubectl get namespace monitoring > /dev/null 2>&1 || kubectl create namespace monitoring
 	@kubectl apply -f k8s/observability/dashboards/red-dashboard.yaml
 
-forward argocd:
+forward-argocd:
 	@echo "🔌 Port Forwarding ArgoCD..."
 	@echo "   👉 Open http://localhost:8080 (User: admin)"
 	@echo "   Get password: kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d"
 	@kubectl port-forward svc/argocd-server -n argocd 8080:443
 
-forward grafana:
+forward-prometheus:
+	@echo "🔌 Port Forwarding Prometheus..."
+	@echo "   👉 Open http://localhost:9090"
+	@kubectl port-forward -n monitoring svc/prometheus-operated 9090
+forward-grafana:
 	@echo "🔌 Port Forwarding Grafana..."
 	@echo "   👉 Open http://localhost:3000 (User: admin / Pass: admin)"
 	@kubectl port-forward svc/grafana -n monitoring 3000:80

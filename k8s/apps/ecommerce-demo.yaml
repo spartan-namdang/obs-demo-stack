@@ -71,9 +71,9 @@ spec:
         - name: POSTGRES_DSN
           value: "postgresql://demo_user:demo_pass@postgres-postgresql:5432/demo_db"
         - name: SQS_ENDPOINT
-          value: "http://localstack.demo.svc.cluster.local:4566"
+          value: "http://localstack:4566"
         - name: SQS_QUEUE_URL
-          value: "http://localstack.demo.svc.cluster.local:4566/000000000000/orders-queue"
+          value: "http://localstack:4566/000000000000/orders-queue"
         ports:
         - containerPort: 8000
         readinessProbe:
