@@ -103,3 +103,24 @@ spec:
   - port: 9384
     targetPort: 9384
     name: metrics
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: sqs-exporter
+  namespace: demo
+  labels:
+    release: prometheus
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
+spec:
+  selector:
+    matchLabels:
+      app: sqs-exporter
+  namespaceSelector:
+    matchNames:
+      - demo
+  endpoints:
+    - port: metrics
+      path: /metrics
+      interval: 30s
