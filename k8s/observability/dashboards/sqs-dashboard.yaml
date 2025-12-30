@@ -1,0 +1,111 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sqs-dashboard
+  namespace: monitoring
+  labels:
+    # This label matches the Grafana sidecar config we created earlier
+    grafana_dashboard: "1" 
+data:
+  red-dashboard.json: |
+    {
+      "uid": "sqs-exporter",
+      "title": "SQS Exporter",
+      "tags": ["sqs", "aws", "queue"],
+      "timezone": "browser",
+      "schemaVersion": 38,
+      "version": 1,
+      "refresh": "30s",
+      "panels": [
+        {
+          "id": 1,
+          "type": "stat",
+          "title": "Visible Messages",
+          "gridPos": { "x": 0, "y": 0, "w": 8, "h": 4 },
+          "datasource": { "type": "prometheus", "uid": "Prometheus" },
+          "targets": [
+            {
+              "expr": "sum by (queue) (sqs_ApproximateNumberOfMessages)",
+              "legendFormat": "{{queue}}"
+            }
+          ],
+          "options": {
+            "reduceOptions": { "calcs": ["lastNotNull"] },
+            "orientation": "horizontal"
+          }
+        },
+        {
+          "id": 2,
+          "type": "stat",
+          "title": "Delayed Messages",
+          "gridPos": { "x": 8, "y": 0, "w": 8, "h": 4 },
+          "datasource": { "type": "prometheus", "uid": "Prometheus" },
+          "targets": [
+            {
+              "expr": "sum by (queue) (sqs_ApproximateNumberOfMessagesDelayed)",
+              "legendFormat": "{{queue}}"
+            }
+          ],
+          "options": {
+            "reduceOptions": { "calcs": ["lastNotNull"] },
+            "orientation": "horizontal"
+          }
+        },
+        {
+          "id": 3,
+          "type": "stat",
+          "title": "In-flight Messages",
+          "gridPos": { "x": 16, "y": 0, "w": 8, "h": 4 },
+          "datasource": { "type": "prometheus", "uid": "Prometheus" },
+          "targets": [
+            {
+              "expr": "sum by (queue) (sqs_ApproximateNumberOfMessagesNotVisible)",
+              "legendFormat": "{{queue}}"
+            }
+          ],
+          "options": {
+            "reduceOptions": { "calcs": ["lastNotNull"] },
+            "orientation": "horizontal"
+          }
+        },
+        {
+          "id": 4,
+          "type": "timeseries",
+          "title": "Visible Messages Over Time",
+          "gridPos": { "x": 0, "y": 4, "w": 24, "h": 6 },
+          "datasource": { "type": "prometheus", "uid": "Prometheus" },
+          "targets": [
+            {
+              "expr": "sqs_ApproximateNumberOfMessages",
+              "legendFormat": "{{queue}}"
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "type": "timeseries",
+          "title": "Delayed Messages Over Time",
+          "gridPos": { "x": 0, "y": 10, "w": 24, "h": 6 },
+          "datasource": { "type": "prometheus", "uid": "Prometheus" },
+          "targets": [
+            {
+              "expr": "sqs_ApproximateNumberOfMessagesDelayed",
+              "legendFormat": "{{queue}}"
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "type": "timeseries",
+          "title": "In-flight Messages Over Time",
+          "gridPos": { "x": 0, "y": 16, "w": 24, "h": 6 },
+          "datasource": { "type": "prometheus", "uid": "Prometheus" },
+          "targets": [
+            {
+              "expr": "sqs_ApproximateNumberOfMessagesNotVisible",
+              "legendFormat": "{{queue}}"
+            }
+          ]
+        }
+      ]
+    }
