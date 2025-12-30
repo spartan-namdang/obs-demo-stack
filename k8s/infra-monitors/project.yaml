@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: infra-monitors
-  namespace: argocd
+  namespace: demo
 spec:
   project: default
   source:
