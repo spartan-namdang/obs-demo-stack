@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: sqs-exporter
+  namespace: demo
+  labels:
+    release: prometheus
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  selector:
+    matchLabels:
+      app: sqs-exporter
+  namespaceSelector:
+    matchNames:
+      - demo
+  endpoints:
+    - port: metrics
+      path: /metrics
+      interval: 30s

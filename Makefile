@@ -48,6 +48,10 @@ deploy:
 	@sleep 10
 	@# 4. Deploy Apps
 	@kubectl apply -f k8s/apps/
+	@sleep 10
+	@# 5. Deploy Infra Monitors
+	@kubectl apply -f k8s/infra-monitors/project.yaml
+	@echo "⏳ Waiting for Infra Monitors to sync..."
 
 dashboards:
 	@echo "📊 Uploading Dashboards..."
