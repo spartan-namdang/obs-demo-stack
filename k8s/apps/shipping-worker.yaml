@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shipping-worker
+  namespace: demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shipping-worker
+  template:
+    metadata:
+      labels:
+        app: shipping-worker
+    spec:
+      containers:
+      - name: app
+        image: shipping-worker:latest
+        imagePullPolicy: Never
+        env:
+        - name: SQS_ENDPOINT
+          value: "http://localstack:4566"
+        - name: SQS_QUEUE_URL
+          value: "http://localstack:4566/000000000000/orders-queue"

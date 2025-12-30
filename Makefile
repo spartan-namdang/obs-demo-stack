@@ -47,7 +47,7 @@ deploy:
 	@echo "⏳ Waiting for Observability to sync..."
 	@sleep 10
 	@# 4. Deploy Apps
-	@kubectl apply -f k8s/apps/ecommerce-demo.yaml
+	@kubectl apply -f k8s/apps/
 
 dashboards:
 	@echo "📊 Uploading Dashboards..."
@@ -59,16 +59,17 @@ forward-argocd:
 	@echo "🔌 Port Forwarding ArgoCD..."
 	@echo "   👉 Open http://localhost:8080 (User: admin)"
 	@echo "   Get password: $(shell kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d)"
-	@kubectl port-forward svc/argocd-server -n argocd 8080:443
+	@kubectl port-forward -n argocd svc/argocd-server 8080:443
 
 forward-prometheus:
 	@echo "🔌 Port Forwarding Prometheus..."
 	@echo "   👉 Open http://localhost:9090"
 	@kubectl port-forward -n monitoring svc/prometheus-operated 9090
+
 forward-grafana:
 	@echo "🔌 Port Forwarding Grafana..."
 	@echo "   👉 Open http://localhost:3000 (User: admin / Pass: admin)"
-	@kubectl port-forward svc/grafana -n monitoring 3000:80
+	@kubectl port-forward -n monitoring svc/grafana 3000:80
 
 clean:
 	@echo "💥 Destroying Environment..."

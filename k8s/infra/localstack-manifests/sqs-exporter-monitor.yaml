@@ -5,8 +5,6 @@ metadata:
   namespace: demo
   labels:
     release: prometheus
-  annotations:
-    argocd.argoproj.io/sync-wave: "10"
 spec:
   selector:
     matchLabels:
