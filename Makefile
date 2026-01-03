@@ -80,6 +80,10 @@ forward-checkout:
 	@echo "   👉 Open http://localhost:8888"
 	@kubectl port-forward -n demo svc/checkout-api 8888:80
 
+auto-checkout:
+	@echo "🤖 Starting Auto Checkout..."
+	@while true; do curl http://localhost:8888/ping; sleep 0.5; done
+
 clean:
 	@echo "💥 Destroying Environment..."
 	@minikube delete
