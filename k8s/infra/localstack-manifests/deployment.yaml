@@ -67,7 +67,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: sqs-prometheus-exporter
+      app: sqs-exporter
   template:
     metadata:
       labels:
