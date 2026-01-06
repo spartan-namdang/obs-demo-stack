@@ -64,8 +64,51 @@ spec:
         promtail:
           enabled: true
           config:
+            server:
+              http_listen_port: 3101
+              grpc_listen_port: 0
+
+            positions:
+              filename: /run/promtail/positions.yaml
+
             clients:
               - url: http://loki.monitoring.svc.cluster.local:3100/loki/api/v1/push
+
+          scrape_configs:
+            - job_name: kubernetes-pods
+              kubernetes_sd_configs:
+                - role: pod
+
+              pipeline_stages:
+                - docker: {}
+
+              relabel_configs:
+                # namespace
+                - source_labels: [__meta_kubernetes_namespace]
+                  target_label: namespace
+
+                # pod name
+                - source_labels: [__meta_kubernetes_pod_name]
+                  target_label: pod
+
+                # app label (most important)
+                - source_labels: [__meta_kubernetes_pod_label_app]
+                  target_label: app
+
+                # app.kubernetes.io/name (fallback)
+                - source_labels: [__meta_kubernetes_pod_label_app_kubernetes_io_name]
+                  target_label: app
+                  action: replace
+                  regex: (.+)
+
+                # container name
+                - source_labels: [__meta_kubernetes_container_name]
+                  target_label: container
+
+                # only keep running pods
+                - action: drop
+                  source_labels: [__meta_kubernetes_pod_phase]
+                  regex: Pending|Succeeded|Failed
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
