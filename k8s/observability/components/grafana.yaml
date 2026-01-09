@@ -44,7 +44,7 @@ spec:
             # 3. Tempo (Traces)
             - name: Tempo
               type: tempo
-              url: http://tempo.monitoring.svc.cluster.local:3100
+              url: http://tempo.monitoring.svc.cluster.local:3200
               jsonData:
                 nodeGraph:
                   enabled: true

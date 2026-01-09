@@ -21,7 +21,7 @@ const sdk = new NodeSDK({
     "service.name": "inventory-service",
   }),
   traceExporter: new OTLPTraceExporter({
-    url: "grpc://tempo:4317",
+    url: "grpc://tempo.monitoring.svc.cluster.local:4317",
   }),
   instrumentations: [
     new HttpInstrumentation(),
