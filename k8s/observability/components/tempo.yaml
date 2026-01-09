@@ -20,7 +20,8 @@ spec:
                 http:
                   endpoint: 0.0.0.0:4318
           persistence:
-            enabled: false
+            enabled: true
+            size: 1Gi
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring

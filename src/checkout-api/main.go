@@ -8,24 +8,24 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
-	"github.com/zsais/go-gin-prometheus"
+	ginprometheus "github.com/zsais/go-gin-prometheus"
 	"go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin"
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	"go.opentelemetry.io/otel/propagation"
 	"go.opentelemetry.io/otel/sdk/resource"
-	"go.opentelemetry.io/otel/trace"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
+	"go.opentelemetry.io/otel/trace"
 )
 
 var inventoryServiceURL = os.Getenv("INVENTORY_SERVICE_URL")
 
 func initTracer() func(context.Context) error {
-    // Sends traces to Tempo (via OTel Collector or direct)
+	// Sends traces to Tempo (via OTel Collector or direct)
 	ctx := context.Background()
-	exporter, err := otlptracegrpc.New(ctx, otlptracegrpc.WithInsecure(), otlptracegrpc.WithEndpoint("tempo:4317"))
+	exporter, err := otlptracegrpc.New(ctx, otlptracegrpc.WithInsecure(), otlptracegrpc.WithEndpoint("tempo.monitoring.svc.cluster.local:4317"))
 	if err != nil {
 		log.Fatalf("failed to create trace exporter: %v", err)
 	}
