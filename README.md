@@ -2,11 +2,6 @@
 
 A comprehensive demonstration of an observability stack (LGTM: Loki, Grafana, Tempo, Mimir/Prometheus) on Kubernetes. This project is designed for DevOps learners to understand how to instrument applications, run observability infrastructure locally, and troubleshoot issues.
 
-## Out of scope
-- AWS
-- CI/CD, GitOps
-- Autoscaling
-
 ## Video demo
 <iframe width="560" height="315" src="https://www.youtube.com/watch?v=Qp1vybkRxfI" frameborder="0" allowfullscreen></iframe>
 - Or open this: https://youtu.be/Qp1vybkRxfI
@@ -53,6 +48,11 @@ This project deploys a full observability stack using the "LGTM" stack plus Prom
 -   **Grafana**: Visualization and analytics platform.
 -   **Tempo**: Distributed tracing backend.
 -   **Prometheus**: Monitoring and alerting toolkit.
+
+## Out of scope
+- AWS
+- CI/CD, GitOps
+- Autoscaling
 
 ## Getting Started
 
