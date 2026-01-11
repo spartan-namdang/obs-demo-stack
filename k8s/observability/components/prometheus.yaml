@@ -28,11 +28,6 @@ spec:
         defaultRules:
           create: false
 
-        prometheusSpec:
-          ruleSelector:
-            matchLabels:
-              release: prometheus
-        
         # We deploy Grafana separately to have better control over config
         grafana:
           enabled: false
