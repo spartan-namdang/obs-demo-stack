@@ -24,6 +24,10 @@ spec:
               requests:
                 memory: 400Mi
 
+        # Disable default alerting rules to avoid noise
+        defaultRules:
+          create: false
+        
         # We deploy Grafana separately to have better control over config
         grafana:
           enabled: false
