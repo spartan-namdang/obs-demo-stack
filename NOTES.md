@@ -1,4 +1,4 @@
-# Note
+# Notes
 
 ## 1. Observability Stack Configuration
 
